@@ -1,27 +1,31 @@
 {
-  "name": "nexus-os",
+  "name": "my-mcp-server",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "NexusOS - Enterprise Incident Response Platform Foundation (Phase 1)",
+  "description": "hey",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "dev": "nitrostack-cli dev",
+    "build": "nitrostack-cli build",
+    "start": "npm run build && nitrostack-cli start",
+    "start:prod": "nitrostack-cli start",
+    "upgrade": "nitrostack-cli upgrade",
+    "install:all": "nitrostack-cli install",
+    "widget": "npm --prefix src/widgets"
   },
   "dependencies": {
-    "pg": "^8.11.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "dotenv": "^16.3.1",
+    "@nitrostack/core": "^1.0.14",
+    "zod": "^3.22.4",
+    "@modelcontextprotocol/ext-apps": ">=0.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.12.7",
-    "@types/pg": "^8.11.5",
-    "@types/react": "^18.3.1",
-    "@types/react-dom": "^18.3.1",
-    "@vitejs/plugin-react": "^4.2.1",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.10"
+    "@nitrostack/cli": "^1.0.15",
+    "@types/node": "^22.10.0",
+    "typescript": "^5.3.3"
+  },
+  "author": "",
+  "nitrostack": {
+    "skillsVersion": "1.0.0"
   }
 }

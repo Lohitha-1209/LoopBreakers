@@ -5,5 +5,5 @@
  * Serves as the common data contract across agents, MCPs, services, and UI components.
  */
 
-export * from './enums';
-export * from './models';
+export * from './enums.js';
+export * from './models.js';

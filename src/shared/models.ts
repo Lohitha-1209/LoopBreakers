@@ -8,7 +8,7 @@ import {
   ProposalPriority,
   IncidentType,
   NotificationStatus,
-} from './enums';
+} from './enums.js';
 
 /**
  * Base entity with standard tracking fields.
