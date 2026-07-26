@@ -215,262 +215,7 @@ NexusOS supports enterprise-scale incident response scenarios including:
 ---
 
 
-# MCP Tool Execution Flow
 
-Each AI agent communicates exclusively through standardized MCP tools.
-
-```mermaid
-flowchart LR
-
-Incident
-
-Incident --> Coordinator
-
-Coordinator --> DetectAttack
-
-Coordinator --> ScanAssets
-
-Coordinator --> IsolateSystem
-
-DetectAttack --> Proposal
-
-ScanAssets --> Proposal
-
-IsolateSystem --> Proposal
-
-Proposal --> Arbitration
-
-Arbitration --> FinalDecision
-```
-
----
-
-# Knowledge Investigation Flow
-
-NexusOS performs structured knowledge investigation across multiple enterprise knowledge sources before generating recommendations.
-
-```mermaid
-flowchart TD
-
-Incident
-
-Incident --> SecurityKnowledge
-
-Incident --> ComplianceKnowledge
-
-Incident --> MailKnowledge
-
-SecurityKnowledge --> ThreatDatabase
-
-SecurityKnowledge --> AssetInventory
-
-ComplianceKnowledge --> GDPRPolicies
-
-ComplianceKnowledge --> InternalPolicies
-
-MailKnowledge --> Mailbox
-
-MailKnowledge --> NotificationTemplates
-
-ThreatDatabase --> Proposal
-
-AssetInventory --> Proposal
-
-GDPRPolicies --> Proposal
-
-Mailbox --> Proposal
-
-Proposal --> Arbitration
-```
-
----
-
-# Enterprise Data Flow
-
-```mermaid
-flowchart LR
-
-Incident
-
-Incident --> PostgreSQL
-
-PostgreSQL --> Coordinator
-
-Coordinator --> MCPServers
-
-MCPServers --> ProposalStore
-
-ProposalStore --> Arbitration
-
-Arbitration --> DecisionStore
-
-DecisionStore --> Dashboard
-
-DecisionStore --> AuditLogs
-```
-
----
-
-# Dependency Graph Traversal
-
-Before containment actions are approved, NexusOS identifies upstream and downstream enterprise dependencies.
-
-```mermaid
-graph TD
-
-AuthenticationServer
-
-AuthenticationServer --> Redis
-
-AuthenticationServer --> APIGateway
-
-APIGateway --> Kubernetes
-
-Kubernetes --> Database
-
-Database --> BackupCluster
-
-Redis --> SessionStore
-
-SessionStore --> CustomerPortal
-```
-
-This dependency graph prevents containment actions that could unintentionally disrupt unrelated enterprise services.
-
----
-
-# Change Detection Workflow
-
-NexusOS continuously monitors changes across enterprise infrastructure.
-
-```mermaid
-flowchart LR
-
-Infrastructure
-
-Infrastructure --> ChangeDetector
-
-Policies --> ChangeDetector
-
-Assets --> ChangeDetector
-
-ThreatIntel --> ChangeDetector
-
-ChangeDetector --> IncidentCorrelation
-
-IncidentCorrelation --> Coordinator
-```
-
-The Change Detection Engine continuously evaluates:
-
-- Infrastructure modifications
-- Policy updates
-- Threat intelligence changes
-- Asset inventory updates
-- Configuration drift
-- Enterprise topology changes
-
----
-
-# Approval Workflow
-
-Unlike conventional AI assistants, NexusOS separates recommendation generation from enterprise approval.
-
-```mermaid
-flowchart TD
-
-SecurityProposal
-
-ComplianceProposal
-
-MailProposal
-
-SecurityProposal --> Arbitration
-
-ComplianceProposal --> Arbitration
-
-MailProposal --> Arbitration
-
-Arbitration --> BusinessRules
-
-BusinessRules --> ApprovedDecision
-
-ApprovedDecision --> ExecuteResponse
-
-BusinessRules --> RejectAction
-```
-
-Only actions satisfying enterprise policies are approved for execution.
-
----
-
-# Audit Workflow
-
-Every decision produced by NexusOS is completely traceable.
-
-```mermaid
-flowchart LR
-
-Incident
-
-Incident --> ToolInvocation
-
-ToolInvocation --> ProposalGeneration
-
-ProposalGeneration --> Arbitration
-
-Arbitration --> Decision
-
-Decision --> AuditLog
-
-AuditLog --> Dashboard
-
-AuditLog --> ComplianceReport
-```
-
-Every audit record stores:
-
-- Incident Identifier
-- Invoked MCP Tool
-- Responsible Agent
-- Generated Proposal
-- Arbitration Decision
-- Execution Timestamp
-- User Context
-- Approved Actions
-- Policy References
-
----
-
-# Enterprise Decision Lifecycle
-
-```mermaid
-stateDiagram-v2
-
-[*] --> IncidentDetected
-
-IncidentDetected --> ThreatAnalysis
-
-ThreatAnalysis --> ProposalGeneration
-
-ProposalGeneration --> Arbitration
-
-Arbitration --> Approved
-
-Arbitration --> Rejected
-
-Approved --> Execution
-
-Execution --> Audit
-
-Audit --> Closed
-
-Rejected --> Closed
-
-Closed --> [*]
-```
-
----
 
 # Architectural Principles
 
@@ -903,64 +648,7 @@ M --> P[Notification Service]
 
 ---
 
-# Layered Architecture
 
-```mermaid
-flowchart TB
-
-subgraph Presentation Layer
-Dashboard
-Reports
-Audit Logs
-end
-
-subgraph Coordination Layer
-Coordinator
-end
-
-subgraph AI Layer
-SecurityAgent
-ComplianceAgent
-MailAgent
-end
-
-subgraph MCP Layer
-SecurityMCP
-ComplianceMCP
-MailMCP
-ArbitrationMCP
-end
-
-subgraph Enterprise Layer
-ThreatIntel
-GDPRPolicies
-MailServer
-BusinessRules
-EnterpriseAssets
-end
-
-Dashboard --> Coordinator
-
-Coordinator --> SecurityAgent
-Coordinator --> ComplianceAgent
-Coordinator --> MailAgent
-
-SecurityAgent --> SecurityMCP
-ComplianceAgent --> ComplianceMCP
-MailAgent --> MailMCP
-
-SecurityMCP --> ThreatIntel
-ComplianceMCP --> GDPRPolicies
-MailMCP --> MailServer
-
-SecurityMCP --> ArbitrationMCP
-ComplianceMCP --> ArbitrationMCP
-MailMCP --> ArbitrationMCP
-
-ArbitrationMCP --> BusinessRules
-```
-
----
 
 # Module Architecture
 
@@ -1023,6 +711,263 @@ Coordinator->>Arbitration: Aggregate Proposals
 Arbitration-->>Coordinator: Final Decision
 
 Coordinator-->>User: Enterprise Response
+```
+
+---
+
+# MCP Tool Execution Flow
+
+Each AI agent communicates exclusively through standardized MCP tools.
+
+```mermaid
+flowchart LR
+
+Incident
+
+Incident --> Coordinator
+
+Coordinator --> DetectAttack
+
+Coordinator --> ScanAssets
+
+Coordinator --> IsolateSystem
+
+DetectAttack --> Proposal
+
+ScanAssets --> Proposal
+
+IsolateSystem --> Proposal
+
+Proposal --> Arbitration
+
+Arbitration --> FinalDecision
+```
+
+---
+
+# Knowledge Investigation Flow
+
+NexusOS performs structured knowledge investigation across multiple enterprise knowledge sources before generating recommendations.
+
+```mermaid
+flowchart TD
+
+Incident
+
+Incident --> SecurityKnowledge
+
+Incident --> ComplianceKnowledge
+
+Incident --> MailKnowledge
+
+SecurityKnowledge --> ThreatDatabase
+
+SecurityKnowledge --> AssetInventory
+
+ComplianceKnowledge --> GDPRPolicies
+
+ComplianceKnowledge --> InternalPolicies
+
+MailKnowledge --> Mailbox
+
+MailKnowledge --> NotificationTemplates
+
+ThreatDatabase --> Proposal
+
+AssetInventory --> Proposal
+
+GDPRPolicies --> Proposal
+
+Mailbox --> Proposal
+
+Proposal --> Arbitration
+```
+
+---
+
+# Enterprise Data Flow
+
+```mermaid
+flowchart LR
+
+Incident
+
+Incident --> PostgreSQL
+
+PostgreSQL --> Coordinator
+
+Coordinator --> MCPServers
+
+MCPServers --> ProposalStore
+
+ProposalStore --> Arbitration
+
+Arbitration --> DecisionStore
+
+DecisionStore --> Dashboard
+
+DecisionStore --> AuditLogs
+```
+
+---
+
+# Dependency Graph Traversal
+
+Before containment actions are approved, NexusOS identifies upstream and downstream enterprise dependencies.
+
+```mermaid
+graph TD
+
+AuthenticationServer
+
+AuthenticationServer --> Redis
+
+AuthenticationServer --> APIGateway
+
+APIGateway --> Kubernetes
+
+Kubernetes --> Database
+
+Database --> BackupCluster
+
+Redis --> SessionStore
+
+SessionStore --> CustomerPortal
+```
+
+This dependency graph prevents containment actions that could unintentionally disrupt unrelated enterprise services.
+
+---
+
+# Change Detection Workflow
+
+NexusOS continuously monitors changes across enterprise infrastructure.
+
+```mermaid
+flowchart LR
+
+Infrastructure
+
+Infrastructure --> ChangeDetector
+
+Policies --> ChangeDetector
+
+Assets --> ChangeDetector
+
+ThreatIntel --> ChangeDetector
+
+ChangeDetector --> IncidentCorrelation
+
+IncidentCorrelation --> Coordinator
+```
+
+The Change Detection Engine continuously evaluates:
+
+- Infrastructure modifications
+- Policy updates
+- Threat intelligence changes
+- Asset inventory updates
+- Configuration drift
+- Enterprise topology changes
+
+---
+
+# Approval Workflow
+
+Unlike conventional AI assistants, NexusOS separates recommendation generation from enterprise approval.
+
+```mermaid
+flowchart TD
+
+SecurityProposal
+
+ComplianceProposal
+
+MailProposal
+
+SecurityProposal --> Arbitration
+
+ComplianceProposal --> Arbitration
+
+MailProposal --> Arbitration
+
+Arbitration --> BusinessRules
+
+BusinessRules --> ApprovedDecision
+
+ApprovedDecision --> ExecuteResponse
+
+BusinessRules --> RejectAction
+```
+
+Only actions satisfying enterprise policies are approved for execution.
+
+---
+
+# Audit Workflow
+
+Every decision produced by NexusOS is completely traceable.
+
+```mermaid
+flowchart LR
+
+Incident
+
+Incident --> ToolInvocation
+
+ToolInvocation --> ProposalGeneration
+
+ProposalGeneration --> Arbitration
+
+Arbitration --> Decision
+
+Decision --> AuditLog
+
+AuditLog --> Dashboard
+
+AuditLog --> ComplianceReport
+```
+
+Every audit record stores:
+
+- Incident Identifier
+- Invoked MCP Tool
+- Responsible Agent
+- Generated Proposal
+- Arbitration Decision
+- Execution Timestamp
+- User Context
+- Approved Actions
+- Policy References
+
+---
+
+# Enterprise Decision Lifecycle
+
+```mermaid
+stateDiagram-v2
+
+[*] --> IncidentDetected
+
+IncidentDetected --> ThreatAnalysis
+
+ThreatAnalysis --> ProposalGeneration
+
+ProposalGeneration --> Arbitration
+
+Arbitration --> Approved
+
+Arbitration --> Rejected
+
+Approved --> Execution
+
+Execution --> Audit
+
+Audit --> Closed
+
+Rejected --> Closed
+
+Closed --> [*]
 ```
 
 ---
