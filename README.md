@@ -213,183 +213,7 @@ NexusOS supports enterprise-scale incident response scenarios including:
 - Government agencies
 
 ---
-# System Architecture
 
-NexusOS follows a distributed, modular, multi-agent architecture built around the **Model Context Protocol (MCP)**. Instead of allowing a single AI model to directly access enterprise systems, specialized AI agents communicate with dedicated MCP servers that encapsulate enterprise knowledge, business logic, and organizational policies.
-
-The platform is divided into five architectural layers:
-
-1. Event Collection Layer
-2. AI Coordination Layer
-3. MCP Intelligence Layer
-4. Enterprise Knowledge Layer
-5. Presentation & Audit Layer
-
-This layered architecture ensures modularity, scalability, explainability, and enterprise-grade governance.
-
----
-
-# High-Level System Architecture
-
-```mermaid
-flowchart TD
-
-A[Enterprise Incident]
-
-A --> B[Event Collector Service]
-
-B --> C[(Incident Repository)]
-
-C --> D[Coordinator Agent]
-
-D --> E[Security Agent]
-D --> F[Compliance Agent]
-D --> G[Mail Agent]
-
-E --> H[Security MCP]
-F --> I[Compliance MCP]
-G --> J[Mail MCP]
-
-H --> K[Structured Proposal]
-I --> K
-J --> K
-
-K --> L[Arbitration MCP]
-
-L --> M[Final Enterprise Decision]
-
-M --> N[Dashboard]
-
-M --> O[Audit Logger]
-
-M --> P[Notification Service]
-```
-
----
-
-# Layered Architecture
-
-```mermaid
-flowchart TB
-
-subgraph Presentation Layer
-Dashboard
-Reports
-Audit Logs
-end
-
-subgraph Coordination Layer
-Coordinator
-end
-
-subgraph AI Layer
-SecurityAgent
-ComplianceAgent
-MailAgent
-end
-
-subgraph MCP Layer
-SecurityMCP
-ComplianceMCP
-MailMCP
-ArbitrationMCP
-end
-
-subgraph Enterprise Layer
-ThreatIntel
-GDPRPolicies
-MailServer
-BusinessRules
-EnterpriseAssets
-end
-
-Dashboard --> Coordinator
-
-Coordinator --> SecurityAgent
-Coordinator --> ComplianceAgent
-Coordinator --> MailAgent
-
-SecurityAgent --> SecurityMCP
-ComplianceAgent --> ComplianceMCP
-MailAgent --> MailMCP
-
-SecurityMCP --> ThreatIntel
-ComplianceMCP --> GDPRPolicies
-MailMCP --> MailServer
-
-SecurityMCP --> ArbitrationMCP
-ComplianceMCP --> ArbitrationMCP
-MailMCP --> ArbitrationMCP
-
-ArbitrationMCP --> BusinessRules
-```
-
----
-
-# Module Architecture
-
-```mermaid
-flowchart LR
-
-Coordinator
-
-Coordinator --> SecurityModule
-Coordinator --> ComplianceModule
-Coordinator --> MailModule
-Coordinator --> ArbitrationModule
-
-SecurityModule --> DetectAttack
-SecurityModule --> ScanAssets
-SecurityModule --> IsolateSystem
-
-ComplianceModule --> CheckViolation
-ComplianceModule --> GenerateReport
-
-MailModule --> MonitorMailbox
-MailModule --> SendAlert
-
-ArbitrationModule --> ResolveConflict
-ArbitrationModule --> ExecuteResponse
-```
-
----
-
-# Request Flow
-
-Every enterprise incident follows a deterministic execution pipeline.
-
-```mermaid
-sequenceDiagram
-
-participant User
-participant Coordinator
-participant Security
-participant Compliance
-participant Mail
-participant Arbitration
-
-User->>Coordinator: Submit Incident
-
-Coordinator->>Security: Analyze Threat
-
-Coordinator->>Compliance: Check Regulations
-
-Coordinator->>Mail: Evaluate Notifications
-
-Security-->>Coordinator: Security Proposal
-
-Compliance-->>Coordinator: Compliance Proposal
-
-Mail-->>Coordinator: Notification Proposal
-
-Coordinator->>Arbitration: Aggregate Proposals
-
-Arbitration-->>Coordinator: Final Decision
-
-Coordinator-->>User: Enterprise Response
-```
-
----
 
 # MCP Tool Execution Flow
 
@@ -1021,6 +845,184 @@ resolve_conflicts --> prioritize_actions
 prioritize_actions --> generate_final_decision
 
 generate_final_decision --> close_incident
+```
+
+---
+
+# System Architecture
+
+NexusOS follows a distributed, modular, multi-agent architecture built around the **Model Context Protocol (MCP)**. Instead of allowing a single AI model to directly access enterprise systems, specialized AI agents communicate with dedicated MCP servers that encapsulate enterprise knowledge, business logic, and organizational policies.
+
+The platform is divided into five architectural layers:
+
+1. Event Collection Layer
+2. AI Coordination Layer
+3. MCP Intelligence Layer
+4. Enterprise Knowledge Layer
+5. Presentation & Audit Layer
+
+This layered architecture ensures modularity, scalability, explainability, and enterprise-grade governance.
+
+---
+
+# High-Level System Architecture
+
+```mermaid
+flowchart TD
+
+A[Enterprise Incident]
+
+A --> B[Event Collector Service]
+
+B --> C[(Incident Repository)]
+
+C --> D[Coordinator Agent]
+
+D --> E[Security Agent]
+D --> F[Compliance Agent]
+D --> G[Mail Agent]
+
+E --> H[Security MCP]
+F --> I[Compliance MCP]
+G --> J[Mail MCP]
+
+H --> K[Structured Proposal]
+I --> K
+J --> K
+
+K --> L[Arbitration MCP]
+
+L --> M[Final Enterprise Decision]
+
+M --> N[Dashboard]
+
+M --> O[Audit Logger]
+
+M --> P[Notification Service]
+```
+
+---
+
+# Layered Architecture
+
+```mermaid
+flowchart TB
+
+subgraph Presentation Layer
+Dashboard
+Reports
+Audit Logs
+end
+
+subgraph Coordination Layer
+Coordinator
+end
+
+subgraph AI Layer
+SecurityAgent
+ComplianceAgent
+MailAgent
+end
+
+subgraph MCP Layer
+SecurityMCP
+ComplianceMCP
+MailMCP
+ArbitrationMCP
+end
+
+subgraph Enterprise Layer
+ThreatIntel
+GDPRPolicies
+MailServer
+BusinessRules
+EnterpriseAssets
+end
+
+Dashboard --> Coordinator
+
+Coordinator --> SecurityAgent
+Coordinator --> ComplianceAgent
+Coordinator --> MailAgent
+
+SecurityAgent --> SecurityMCP
+ComplianceAgent --> ComplianceMCP
+MailAgent --> MailMCP
+
+SecurityMCP --> ThreatIntel
+ComplianceMCP --> GDPRPolicies
+MailMCP --> MailServer
+
+SecurityMCP --> ArbitrationMCP
+ComplianceMCP --> ArbitrationMCP
+MailMCP --> ArbitrationMCP
+
+ArbitrationMCP --> BusinessRules
+```
+
+---
+
+# Module Architecture
+
+```mermaid
+flowchart LR
+
+Coordinator
+
+Coordinator --> SecurityModule
+Coordinator --> ComplianceModule
+Coordinator --> MailModule
+Coordinator --> ArbitrationModule
+
+SecurityModule --> DetectAttack
+SecurityModule --> ScanAssets
+SecurityModule --> IsolateSystem
+
+ComplianceModule --> CheckViolation
+ComplianceModule --> GenerateReport
+
+MailModule --> MonitorMailbox
+MailModule --> SendAlert
+
+ArbitrationModule --> ResolveConflict
+ArbitrationModule --> ExecuteResponse
+```
+
+---
+
+# Request Flow
+
+Every enterprise incident follows a deterministic execution pipeline.
+
+```mermaid
+sequenceDiagram
+
+participant User
+participant Coordinator
+participant Security
+participant Compliance
+participant Mail
+participant Arbitration
+
+User->>Coordinator: Submit Incident
+
+Coordinator->>Security: Analyze Threat
+
+Coordinator->>Compliance: Check Regulations
+
+Coordinator->>Mail: Evaluate Notifications
+
+Security-->>Coordinator: Security Proposal
+
+Compliance-->>Coordinator: Compliance Proposal
+
+Mail-->>Coordinator: Notification Proposal
+
+Coordinator->>Arbitration: Aggregate Proposals
+
+Arbitration-->>Coordinator: Final Decision
+
+Coordinator-->>User: Enterprise Response
 ```
 
 ---
