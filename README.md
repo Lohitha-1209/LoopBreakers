@@ -26,8 +26,8 @@ Because these departments rarely collaborate through a common intelligence platf
 - Lack of explainable decision making
 
 NexusOS solves this problem by introducing a collaborative enterprise intelligence platform powered by **distributed Model Context Protocol (MCP) servers**.
-
 Instead of relying on a single AI model to make every decision, NexusOS enables specialized AI agents to collaborate through independent MCP servers while a deterministic Arbitration Engine produces the final enterprise-approved response.
+
 ---
 
 # Purpose
@@ -36,6 +36,7 @@ NexusOS is designed to become an autonomous enterprise coordination platform cap
 Its primary objective is to combine artificial intelligence with deterministic business rules to produce transparent, explainable, and enterprise-safe decisions.
 The platform demonstrates how modern enterprises can safely integrate AI into incident response workflows without allowing a language model to become the ultimate decision maker.
 Instead, AI generates structured recommendations while deterministic arbitration validates, prioritizes, and approves enterprise actions.
+
 ---
 
 # Problem Statement
@@ -81,6 +82,137 @@ The result is:
 - Deterministic approvals
 - Reusable organizational knowledge
 - Simplified scalability
+
+# Architecture Goals
+
+NexusOS is designed around six enterprise engineering goals.
+## 1. Modularity
+Every department owns an independent MCP server.
+Adding a new department requires no changes to existing agents.
+
+---
+
+## 2. Explainability
+Every recommendation contains:
+- reasoning
+- supporting evidence
+- originating department
+- generated actions
+Nothing is hidden behind a black-box response.
+
+---
+
+## 3. Deterministic Decision Making
+Language models generate recommendations.
+Business rules approve decisions.
+This ensures predictable enterprise behavior.
+
+---
+
+## 4. Enterprise Safety
+No AI agent directly accesses enterprise systems.
+Every action passes through controlled MCP tools.
+
+---
+
+## 5. Scalability
+
+Departments can be added independently.
+Future MCPs may include:
+- Finance
+- HR
+- Legal
+- Cloud Operations
+- Infrastructure
+- DevOps
+- Procurement
+
+without redesigning the architecture.
+
+---
+
+## 6. Auditability
+Every incident records:
+- tools invoked
+- proposals generated
+- final decisions
+- timestamps
+- execution history
+creating a complete enterprise audit trail.
+
+---
+
+# Core Features
+
+## Multi-Agent Collaboration
+
+Specialized AI agents collaborate to solve enterprise incidents.
+
+---
+
+## Distributed MCP Servers
+
+Independent enterprise MCP servers expose reusable tools and knowledge.
+
+---
+
+## Coordinator Agent
+
+Coordinates communication between every department.
+
+---
+
+## Enterprise Security Intelligence
+Threat detection
+Asset scanning
+Containment planning
+Attack classification
+
+---
+
+## Compliance Intelligence
+GDPR validation
+Policy verification
+Incident reporting
+Regulatory compliance
+
+---
+
+## Intelligent Mail Monitoring
+Email spike detection
+Automatic stakeholder notification
+Template-based communication
+
+---
+## Deterministic Arbitration
+
+Final enterprise decisions are approved through deterministic business rules rather than language model outputs.
+
+---
+
+# Enterprise Use Cases
+
+NexusOS supports enterprise-scale incident response scenarios including:
+
+- Ransomware attacks
+- Insider threats
+- Unauthorized access
+- Malware outbreaks
+- Data breaches
+- Cloud infrastructure failures
+- Distributed denial-of-service (DDoS) attacks
+- Compliance violations
+- Enterprise email abuse
+- Critical service outages
+- Identity compromise
+- Security Operations Center (SOC) orchestration
+- Incident Command Centers
+- Financial institutions
+- Healthcare infrastructure
+- Manufacturing environments
+- Government agencies
+
+---
 
 ## 🏗️ Architecture & Module Directory Overview
 
