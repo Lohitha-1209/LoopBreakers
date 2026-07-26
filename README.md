@@ -213,6 +213,472 @@ NexusOS supports enterprise-scale incident response scenarios including:
 - Government agencies
 
 ---
+# System Architecture
+
+NexusOS follows a distributed, modular, multi-agent architecture built around the **Model Context Protocol (MCP)**. Instead of allowing a single AI model to directly access enterprise systems, specialized AI agents communicate with dedicated MCP servers that encapsulate enterprise knowledge, business logic, and organizational policies.
+
+The platform is divided into five architectural layers:
+
+1. Event Collection Layer
+2. AI Coordination Layer
+3. MCP Intelligence Layer
+4. Enterprise Knowledge Layer
+5. Presentation & Audit Layer
+
+This layered architecture ensures modularity, scalability, explainability, and enterprise-grade governance.
+
+---
+
+# High-Level System Architecture
+
+```mermaid
+flowchart TD
+
+A[Enterprise Incident]
+
+A --> B[Event Collector Service]
+
+B --> C[(Incident Repository)]
+
+C --> D[Coordinator Agent]
+
+D --> E[Security Agent]
+D --> F[Compliance Agent]
+D --> G[Mail Agent]
+
+E --> H[Security MCP]
+F --> I[Compliance MCP]
+G --> J[Mail MCP]
+
+H --> K[Structured Proposal]
+I --> K
+J --> K
+
+K --> L[Arbitration MCP]
+
+L --> M[Final Enterprise Decision]
+
+M --> N[Dashboard]
+
+M --> O[Audit Logger]
+
+M --> P[Notification Service]
+```
+
+---
+
+# Layered Architecture
+
+```mermaid
+flowchart TB
+
+subgraph Presentation Layer
+Dashboard
+Reports
+Audit Logs
+end
+
+subgraph Coordination Layer
+Coordinator
+end
+
+subgraph AI Layer
+SecurityAgent
+ComplianceAgent
+MailAgent
+end
+
+subgraph MCP Layer
+SecurityMCP
+ComplianceMCP
+MailMCP
+ArbitrationMCP
+end
+
+subgraph Enterprise Layer
+ThreatIntel
+GDPRPolicies
+MailServer
+BusinessRules
+EnterpriseAssets
+end
+
+Dashboard --> Coordinator
+
+Coordinator --> SecurityAgent
+Coordinator --> ComplianceAgent
+Coordinator --> MailAgent
+
+SecurityAgent --> SecurityMCP
+ComplianceAgent --> ComplianceMCP
+MailAgent --> MailMCP
+
+SecurityMCP --> ThreatIntel
+ComplianceMCP --> GDPRPolicies
+MailMCP --> MailServer
+
+SecurityMCP --> ArbitrationMCP
+ComplianceMCP --> ArbitrationMCP
+MailMCP --> ArbitrationMCP
+
+ArbitrationMCP --> BusinessRules
+```
+
+---
+
+# Module Architecture
+
+```mermaid
+flowchart LR
+
+Coordinator
+
+Coordinator --> SecurityModule
+Coordinator --> ComplianceModule
+Coordinator --> MailModule
+Coordinator --> ArbitrationModule
+
+SecurityModule --> DetectAttack
+SecurityModule --> ScanAssets
+SecurityModule --> IsolateSystem
+
+ComplianceModule --> CheckViolation
+ComplianceModule --> GenerateReport
+
+MailModule --> MonitorMailbox
+MailModule --> SendAlert
+
+ArbitrationModule --> ResolveConflict
+ArbitrationModule --> ExecuteResponse
+```
+
+---
+
+# Request Flow
+
+Every enterprise incident follows a deterministic execution pipeline.
+
+```mermaid
+sequenceDiagram
+
+participant User
+participant Coordinator
+participant Security
+participant Compliance
+participant Mail
+participant Arbitration
+
+User->>Coordinator: Submit Incident
+
+Coordinator->>Security: Analyze Threat
+
+Coordinator->>Compliance: Check Regulations
+
+Coordinator->>Mail: Evaluate Notifications
+
+Security-->>Coordinator: Security Proposal
+
+Compliance-->>Coordinator: Compliance Proposal
+
+Mail-->>Coordinator: Notification Proposal
+
+Coordinator->>Arbitration: Aggregate Proposals
+
+Arbitration-->>Coordinator: Final Decision
+
+Coordinator-->>User: Enterprise Response
+```
+
+---
+
+# MCP Tool Execution Flow
+
+Each AI agent communicates exclusively through standardized MCP tools.
+
+```mermaid
+flowchart LR
+
+Incident
+
+Incident --> Coordinator
+
+Coordinator --> DetectAttack
+
+Coordinator --> ScanAssets
+
+Coordinator --> IsolateSystem
+
+DetectAttack --> Proposal
+
+ScanAssets --> Proposal
+
+IsolateSystem --> Proposal
+
+Proposal --> Arbitration
+
+Arbitration --> FinalDecision
+```
+
+---
+
+# Knowledge Investigation Flow
+
+NexusOS performs structured knowledge investigation across multiple enterprise knowledge sources before generating recommendations.
+
+```mermaid
+flowchart TD
+
+Incident
+
+Incident --> SecurityKnowledge
+
+Incident --> ComplianceKnowledge
+
+Incident --> MailKnowledge
+
+SecurityKnowledge --> ThreatDatabase
+
+SecurityKnowledge --> AssetInventory
+
+ComplianceKnowledge --> GDPRPolicies
+
+ComplianceKnowledge --> InternalPolicies
+
+MailKnowledge --> Mailbox
+
+MailKnowledge --> NotificationTemplates
+
+ThreatDatabase --> Proposal
+
+AssetInventory --> Proposal
+
+GDPRPolicies --> Proposal
+
+Mailbox --> Proposal
+
+Proposal --> Arbitration
+```
+
+---
+
+# Enterprise Data Flow
+
+```mermaid
+flowchart LR
+
+Incident
+
+Incident --> PostgreSQL
+
+PostgreSQL --> Coordinator
+
+Coordinator --> MCPServers
+
+MCPServers --> ProposalStore
+
+ProposalStore --> Arbitration
+
+Arbitration --> DecisionStore
+
+DecisionStore --> Dashboard
+
+DecisionStore --> AuditLogs
+```
+
+---
+
+# Dependency Graph Traversal
+
+Before containment actions are approved, NexusOS identifies upstream and downstream enterprise dependencies.
+
+```mermaid
+graph TD
+
+AuthenticationServer
+
+AuthenticationServer --> Redis
+
+AuthenticationServer --> APIGateway
+
+APIGateway --> Kubernetes
+
+Kubernetes --> Database
+
+Database --> BackupCluster
+
+Redis --> SessionStore
+
+SessionStore --> CustomerPortal
+```
+
+This dependency graph prevents containment actions that could unintentionally disrupt unrelated enterprise services.
+
+---
+
+# Change Detection Workflow
+
+NexusOS continuously monitors changes across enterprise infrastructure.
+
+```mermaid
+flowchart LR
+
+Infrastructure
+
+Infrastructure --> ChangeDetector
+
+Policies --> ChangeDetector
+
+Assets --> ChangeDetector
+
+ThreatIntel --> ChangeDetector
+
+ChangeDetector --> IncidentCorrelation
+
+IncidentCorrelation --> Coordinator
+```
+
+The Change Detection Engine continuously evaluates:
+
+- Infrastructure modifications
+- Policy updates
+- Threat intelligence changes
+- Asset inventory updates
+- Configuration drift
+- Enterprise topology changes
+
+---
+
+# Approval Workflow
+
+Unlike conventional AI assistants, NexusOS separates recommendation generation from enterprise approval.
+
+```mermaid
+flowchart TD
+
+SecurityProposal
+
+ComplianceProposal
+
+MailProposal
+
+SecurityProposal --> Arbitration
+
+ComplianceProposal --> Arbitration
+
+MailProposal --> Arbitration
+
+Arbitration --> BusinessRules
+
+BusinessRules --> ApprovedDecision
+
+ApprovedDecision --> ExecuteResponse
+
+BusinessRules --> RejectAction
+```
+
+Only actions satisfying enterprise policies are approved for execution.
+
+---
+
+# Audit Workflow
+
+Every decision produced by NexusOS is completely traceable.
+
+```mermaid
+flowchart LR
+
+Incident
+
+Incident --> ToolInvocation
+
+ToolInvocation --> ProposalGeneration
+
+ProposalGeneration --> Arbitration
+
+Arbitration --> Decision
+
+Decision --> AuditLog
+
+AuditLog --> Dashboard
+
+AuditLog --> ComplianceReport
+```
+
+Every audit record stores:
+
+- Incident Identifier
+- Invoked MCP Tool
+- Responsible Agent
+- Generated Proposal
+- Arbitration Decision
+- Execution Timestamp
+- User Context
+- Approved Actions
+- Policy References
+
+---
+
+# Enterprise Decision Lifecycle
+
+```mermaid
+stateDiagram-v2
+
+[*] --> IncidentDetected
+
+IncidentDetected --> ThreatAnalysis
+
+ThreatAnalysis --> ProposalGeneration
+
+ProposalGeneration --> Arbitration
+
+Arbitration --> Approved
+
+Arbitration --> Rejected
+
+Approved --> Execution
+
+Execution --> Audit
+
+Audit --> Closed
+
+Rejected --> Closed
+
+Closed --> [*]
+```
+
+---
+
+# Architectural Principles
+
+NexusOS follows several enterprise architecture principles:
+
+| Principle | Description |
+|------------|-------------|
+| Separation of Concerns | Agents orchestrate while MCP servers encapsulate business logic. |
+| Loose Coupling | AI agents never directly access enterprise systems. |
+| Explainability | Every recommendation is traceable to its originating MCP tool. |
+| Deterministic Governance | Final decisions are governed by business rules instead of probabilistic LLM outputs. |
+| Modular Expansion | New enterprise departments can be introduced without modifying existing agents. |
+| Auditability | Every action is permanently logged for compliance and forensic investigation. |
+| Reusability | MCP servers expose reusable enterprise capabilities across multiple workflows. |
+| Scalability | Independent MCP modules can be deployed and scaled individually. |
+
+---
+
+> **Coming Next:** **Part 3 – Project Structure & Complete Module Documentation**, including:
+>
+> - Folder Structure
+> - Source Tree Explanation
+> - Security MCP Documentation
+> - Compliance MCP Documentation
+> - Mail MCP Documentation
+> - Arbitration MCP Documentation
+> - Coordinator Agent Documentation
+> - Shared Models Documentation
+> - Widgets Documentation
+> - Complete MCP Tool Reference
+
+--- 
 # MCP Tool Reference
 
 NexusOS is composed of sixteen enterprise-grade MCP tools distributed across four specialized MCP servers. Each tool encapsulates a specific business capability and exposes a standardized interface that can be invoked by AI agents through the Model Context Protocol (MCP).
